@@ -1,0 +1,30 @@
+<html>
+	<head>
+		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css" integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ==" crossorigin="" />
+<script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js" integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ==" crossorigin=""></script>
+	</head>
+	<body>
+		<div id="map" style="width:100%;height:100%;"></div>
+	</body>
+	<script src="worldcountry.js"></script>
+	<script>
+		mapcode();
+		function mapcode(){
+			var map = L.map('map').setView([51.505, -0.09], 3);
+
+			L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
+				attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+			}).addTo(map);
+			L.geoJSON(worldcountry,{
+				onEachFeature:function(feature,layer){
+					layer.bindPopup(feature.properties.ADMIN)
+				},
+				style:{
+					fillColor:'yellow',
+					fillOpacity:0.2,
+					color:'orange'
+				}
+			}).addTo(map);
+		}
+	</script>
+</html>
